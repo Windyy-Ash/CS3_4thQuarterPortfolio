@@ -8,7 +8,7 @@
       :root {
         --bg-1: #0f172a;
         --bg-2: #1f2937;
-        --card: #ffffff;
+        --card: #f3e7d3;
         --ink: #1d2330;
         --muted: #6b7280;
         --brand: #0d6efd;
@@ -128,9 +128,10 @@
 
       label {
         font-weight: 600;
-      }
-
-      input,
+        --padding: 40px 16px;
+        background-size: cover;
+        background-position: center;
+        }
       select {
         width: 100%;
         padding: 12px 14px;
@@ -271,12 +272,56 @@
 
       @media (max-width: 600px) {
         .panel {
-          padding: 24px 18px;
+          padding: 22px 16px;
+          border-radius: 16px;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+        }
+
+        h2 {
+          font-size: 1.25rem;
+        }
+
+        form {
+          gap: 12px;
+        }
+
+        input,
+        select {
+          font-size: 0.95rem;
+        }
+
+        .rating {
+          font-size: 1.4rem;
+        }
+
+        .rating-row {
+          gap: 6px;
+        }
+
+        button {
+          width: 100%;
         }
 
         .movie-card {
           flex-direction: column;
           align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 420px) {
+        body {
+          padding: 24px 12px;
+        }
+
+        .panel {
+          padding: 18px 14px;
+        }
+
+        .movie-rating {
+          letter-spacing: 1px;
         }
       }
 

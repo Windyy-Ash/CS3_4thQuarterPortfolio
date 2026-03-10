@@ -8,7 +8,7 @@
       :root {
         --bg-1: #fff7ed;
         --bg-2: #ecfeff;
-        --card: #ffffff;
+        --card: #f3e7d3;
         --ink: #111827;
         --muted: #6b7280;
         --brand: #2563eb;
@@ -32,6 +32,8 @@
         display: grid;
         place-items: center;
         padding: 40px 16px;
+        background-size: cover;
+        background-position: center;
         position: relative;
         overflow-x: hidden;
       }
@@ -214,7 +216,43 @@
 
       @media (max-width: 600px) {
         .panel {
-          padding: 24px 18px;
+          padding: 22px 16px;
+          border-radius: 16px;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+        }
+
+        form {
+          gap: 12px;
+        }
+
+        input {
+          font-size: 0.95rem;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+
+        .link {
+          text-align: center;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 420px) {
+        body {
+          padding: 24px 12px;
+        }
+
+        .panel {
+          padding: 18px 14px;
         }
       }
 
