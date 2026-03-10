@@ -6,8 +6,8 @@
     <title>Add a Movie</title>
     <style>
       :root {
-        --bg-1: #f6f4ff;
-        --bg-2: #e8f6ff;
+        --bg-1: #0f172a;
+        --bg-2: #1f2937;
         --card: #ffffff;
         --ink: #1d2330;
         --muted: #6b7280;
@@ -26,8 +26,9 @@
         min-height: 100vh;
         font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
         color: var(--ink);
-        background: radial-gradient(circle at top, var(--bg-2), transparent 60%),
-          linear-gradient(135deg, var(--bg-1), #ffffff 55%);
+        background: radial-gradient(circle at top, #1e3a8a, transparent 55%),
+          radial-gradient(circle at 20% 80%, #a16207, transparent 50%),
+          linear-gradient(140deg, var(--bg-1), var(--bg-2));
         display: grid;
         place-items: center;
         padding: 40px 16px;
@@ -145,7 +146,7 @@
       button:hover {
         background: var(--brand-dark);
         box-shadow: 0 12px 24px rgba(13, 110, 253, 0.25);
-        transform: translateY(-1px);
+        transform: translateY(-2px);
       }
 
       button:active {
@@ -154,26 +155,34 @@
 
       .movie-list {
         margin-top: 24px;
+        margin-bottom: 8px;
         display: grid;
-        gap: 12px;
+        gap: 14px;
       }
 
       .movie-card {
         border-radius: 12px;
-        padding: 12px 14px;
+        padding: 14px 16px;
         border: 1px solid #e5e7eb;
         background: #fdfdfd;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: 16px;
         flex-wrap: wrap;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .movie-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
       }
 
       .movie-info {
         font-weight: 600;
         flex: 1 1 260px;
         min-width: 0;
+        line-height: 1.4;
       }
 
       .movie-rating {
@@ -187,18 +196,26 @@
         text-align: center;
         color: var(--muted);
         font-size: 0.95rem;
+        margin: 12px 0;
+      }
+
+      .hint.tight {
         margin-top: -4px;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
       }
 
       .login-link {
         color: var(--brand);
         text-decoration: none;
         font-weight: 600;
+        display: inline-block;
+        margin-top: 6px;
+        transition: color 0.2s ease, transform 0.2s ease;
       }
 
       .login-link:hover {
         text-decoration: underline;
+        transform: translateY(-1px);
       }
 
       @media (max-width: 600px) {
@@ -247,7 +264,7 @@
         </div>
         <button type="submit">Add Movie</button>
       </form>
-      <p class="hint">Click the stars to set a rating.</p>
+      <p class="hint tight">Click the stars to set a rating.</p>
 
       <h2>Movie List</h2>
       <div class="movie-list" id="movieList"></div>
