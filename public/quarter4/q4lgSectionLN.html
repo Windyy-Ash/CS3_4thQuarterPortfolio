@@ -8,7 +8,7 @@
       :root {
         --bg-1: #0f172a;
         --bg-2: #1f2937;
-        --card: #f3e7d3;
+        --card: #ffffff;
         --ink: #1d2330;
         --muted: #6b7280;
         --brand: #0d6efd;
@@ -29,10 +29,12 @@
         font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
         color: var(--ink);
         background-image: url("https://wallpapers.com/images/featured-full/movie-9pvmdtvz4cb0xl37.jpg");
-        --bg-overlay: rgba(0,0,0,0.36);
+        --bg-overlay: rgba(0, 0, 0, 0.36);
         display: grid;
         place-items: center;
         padding: 40px 16px;
+        background-size: cover;
+        background-position: center;
         position: relative;
         overflow-x: hidden;
       }
@@ -128,10 +130,9 @@
 
       label {
         font-weight: 600;
-        --padding: 40px 16px;
-        background-size: cover;
-        background-position: center;
-        }
+      }
+
+      input,
       select {
         width: 100%;
         padding: 12px 14px;
@@ -295,10 +296,6 @@
 
         .rating {
           font-size: 1.4rem;
-        }
-
-        .rating-row {
-          gap: 6px;
         }
 
         button {
