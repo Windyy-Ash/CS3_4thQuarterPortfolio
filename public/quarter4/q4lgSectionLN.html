@@ -257,6 +257,11 @@
     </main>
 
     <script>
+      const savedLogin = localStorage.getItem("loginInfo");
+      if (!savedLogin) {
+        window.location.href = "login.html";
+      }
+
       const form = document.getElementById("movieForm");
       const ratingEl = document.getElementById("rating");
       const stars = Array.from(document.querySelectorAll(".star"));

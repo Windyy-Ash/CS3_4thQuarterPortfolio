@@ -214,7 +214,7 @@
         <p id="savedPass">Password: -</p>
       </div>
 
-      <a class="link" href="q4lgSectionLN.html">Back to Movie Form</a>
+      <a class="link" id="continueLink" href="q4lgSectionLN.html">Continue to Movie Form</a>
     </main>
 
     <script>
@@ -224,6 +224,7 @@
       const savedUser = document.getElementById("savedUser");
       const savedEmail = document.getElementById("savedEmail");
       const savedPass = document.getElementById("savedPass");
+      const continueLink = document.getElementById("continueLink");
 
       function loadLogin() {
         const saved = localStorage.getItem("loginInfo");
@@ -243,12 +244,14 @@
           savedUser.textContent = "Username: -";
           savedEmail.textContent = "Email: -";
           savedPass.textContent = "Password: -";
+          continueLink.style.display = "none";
           return;
         }
         savedName.textContent = `Name: ${info.fullName}`;
         savedUser.textContent = `Username: ${info.username}`;
         savedEmail.textContent = `Email: ${info.email}`;
         savedPass.textContent = `Password: ${info.password}`;
+        continueLink.style.display = "inline-block";
       }
 
       form.addEventListener("submit", (event) => {
@@ -266,6 +269,7 @@
         localStorage.setItem("loginInfo", JSON.stringify(info));
         renderLogin(info);
         form.reset();
+        window.location.href = "q4lgSectionLN.html";
       });
 
       clearBtn.addEventListener("click", () => {
