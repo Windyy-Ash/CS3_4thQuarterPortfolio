@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a Movie</title>
+    <style>
+      :root {
+        --bg-1: #f6f4ff;
+        --bg-2: #e8f6ff;
+        --card: #ffffff;
+        --ink: #1d2330;
+        --muted: #6b7280;
+        --brand: #0d6efd;
+        --brand-dark: #0b5ed7;
+        --accent: #f7b500;
+        --shadow: 0 18px 40px rgba(16, 24, 40, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at top, var(--bg-2), transparent 60%),
+          linear-gradient(135deg, var(--bg-1), #ffffff 55%);
+        display: grid;
+        place-items: center;
+        padding: 40px 16px;
+      }
+
+      .panel {
+        width: min(720px, 100%);
+        background: var(--card);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 32px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel::before,
+      .panel::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.16;
+        pointer-events: none;
+      }
+
+      .panel::before {
+        width: 220px;
+        height: 220px;
+        background: #4aa3ff;
+        top: -120px;
+        right: -80px;
+      }
+
+      .panel::after {
+        width: 200px;
+        height: 200px;
+        background: #f59e0b;
+        bottom: -120px;
+        left: -80px;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+        margin: 0 0 24px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+
+      label {
+        font-weight: 600;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        background: #ffffff;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+      }
+
+      .rating {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 1.6rem;
+      }
+
+      .star {
+        cursor: pointer;
+        color: #d1d5db;
+        transition: transform 0.2s ease, color 0.2s ease;
+        user-select: none;
+      }
+
+      .star.active {
+        color: var(--accent);
+      }
+
+      .star:hover {
+        transform: scale(1.1);
+      }
+
+      button {
+        border: none;
+        background: var(--brand);
+        color: #ffffff;
+        padding: 12px 16px;
+        font-size: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      button:hover {
+        background: var(--brand-dark);
+        box-shadow: 0 12px 24px rgba(13, 110, 253, 0.25);
+        transform: translateY(-1px);
+      }
+
+      button:active {
+        transform: translateY(1px) scale(0.99);
+      }
+
+      .movie-list {
+        margin-top: 24px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .movie-card {
+        border-radius: 12px;
+        padding: 12px 14px;
+        border: 1px solid #e5e7eb;
+        background: #fdfdfd;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .movie-info {
+        font-weight: 600;
+      }
+
+      .movie-rating {
+        color: var(--accent);
+        font-weight: 700;
+        letter-spacing: 2px;
+      }
+
+      .hint {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin-top: -8px;
+      }
+
+      @media (max-width: 600px) {
+        .panel {
+          padding: 24px 18px;
+        }
+
+        .movie-card {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="panel">
+      <h1>Add a Movie</h1>
+      <form id="movieForm">
+        <div>
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" required />
+        </div>
+        <div>
+          <label for="year">Year:</label>
+          <input type="number" id="year" name="year" min="1900" max="2099" required />
+        </div>
+        <div>
+          <label for="genre">Genre:</label>
+          <select id="genre" name="genre" required>
+            <option value="Action">Action</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Fantasy">Fantasy</option>
+          </select>
+        </div>
+        <div>
+          <label>Rating:</label>
+          <div class="rating" id="rating" aria-label="Movie rating">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+          </div>
+        </div>
+        <button type="submit">Add Movie</button>
+      </form>
+      <p class="hint">Click the stars to set a rating.</p>
+
+      <h2>Movie List</h2>
+      <div class="movie-list" id="movieList"></div>
+    </main>
+
+    <script>
+      const form = document.getElementById("movieForm");
+      const ratingEl = document.getElementById("rating");
+      const stars = Array.from(document.querySelectorAll(".star"));
+      const movieList = document.getElementById("movieList");
+
+      let currentRating = "0";
+
+      function setRating(value) {
+        currentRating = value;
+        stars.forEach((star) => {
+          const starValue = star.getAttribute("data-value");
+          star.classList.toggle("active", Number(starValue) <= Number(value));
+        });
+      }
+
+      function loadMovies() {
+        const saved = localStorage.getItem("movies");
+        if (!saved) {
+          return [];
+        }
+        try {
+          return JSON.parse(saved);
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveMovies(movies) {
+        localStorage.setItem("movies", JSON.stringify(movies));
+      }
+
+      function renderMovies(movies) {
+        movieList.innerHTML = "";
+        movies.forEach((movie) => {
+          const item = document.createElement("div");
+          item.className = "movie-card";
+
+          const info = document.createElement("div");
+          info.className = "movie-info";
+          info.textContent = `${movie.title} (${movie.year}) - ${movie.genre}, Rating:`;
+
+          const rating = document.createElement("div");
+          rating.className = "movie-rating";
+          rating.textContent = "\u2605".repeat(Number(movie.rating));
+
+          item.appendChild(info);
+          item.appendChild(rating);
+          movieList.appendChild(item);
+        });
+      }
+
+      ratingEl.addEventListener("click", (event) => {
+        const target = event.target;
+        if (target.classList.contains("star")) {
+          setRating(target.getAttribute("data-value"));
+        }
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const title = document.getElementById("title").value.trim();
+        const year = document.getElementById("year").value.trim();
+        const genre = document.getElementById("genre").value;
+
+        if (!title || !year || currentRating === "0") {
+          alert("Please fill out all fields and choose a rating.");
+          return;
+        }
+
+        const movies = loadMovies();
+        movies.push({
+          title,
+          year,
+          genre,
+          rating: currentRating,
+        });
+        saveMovies(movies);
+        renderMovies(movies);
+        form.reset();
+        setRating("0");
+      });
+
+      renderMovies(loadMovies());
+    </script>
+  </body>
+</html>
