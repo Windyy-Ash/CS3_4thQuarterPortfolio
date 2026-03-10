@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      :root {
+        --bg-1: #f5f7ff;
+        --bg-2: #fef3c7;
+        --card: #ffffff;
+        --ink: #111827;
+        --muted: #6b7280;
+        --brand: #2563eb;
+        --brand-dark: #1d4ed8;
+        --accent: #f59e0b;
+        --shadow: 0 18px 40px rgba(16, 24, 40, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        color: var(--ink);
+        background: radial-gradient(circle at top, var(--bg-2), transparent 60%),
+          linear-gradient(135deg, var(--bg-1), #ffffff 60%);
+        display: grid;
+        place-items: center;
+        padding: 40px 16px;
+      }
+
+      .panel {
+        width: min(720px, 100%);
+        background: var(--card);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 32px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel::before,
+      .panel::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.16;
+        pointer-events: none;
+      }
+
+      .panel::before {
+        width: 220px;
+        height: 220px;
+        background: #60a5fa;
+        top: -120px;
+        right: -80px;
+      }
+
+      .panel::after {
+        width: 200px;
+        height: 200px;
+        background: #f59e0b;
+        bottom: -120px;
+        left: -80px;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 0 0 20px;
+        font-size: 2rem;
+      }
+
+      .sub {
+        text-align: center;
+        color: var(--muted);
+        margin-bottom: 24px;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+
+      label {
+        font-weight: 600;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      input:focus {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      button {
+        border: none;
+        background: var(--brand);
+        color: #ffffff;
+        padding: 12px 16px;
+        font-size: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      button:hover {
+        background: var(--brand-dark);
+        box-shadow: 0 12px 24px rgba(37, 99, 235, 0.25);
+        transform: translateY(-1px);
+      }
+
+      button:active {
+        transform: translateY(1px) scale(0.99);
+      }
+
+      .ghost {
+        background: #f1f5f9;
+        color: #0f172a;
+      }
+
+      .ghost:hover {
+        background: #e2e8f0;
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+      }
+
+      .card {
+        margin-top: 24px;
+        padding: 16px;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        background: #f9fafb;
+      }
+
+      .card h2 {
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+      }
+
+      .card p {
+        margin: 4px 0;
+        color: var(--muted);
+      }
+
+      .link {
+        display: inline-block;
+        margin-top: 16px;
+        color: var(--brand);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .link:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 600px) {
+        .panel {
+          padding: 24px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="panel">
+      <h1>Login</h1>
+      <p class="sub">Save your info to local storage for quick access.</p>
+
+      <form id="loginForm">
+        <div>
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" required />
+        </div>
+        <div>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="actions">
+          <button type="submit">Save Login</button>
+          <button type="button" class="ghost" id="clearBtn">Clear Saved</button>
+        </div>
+      </form>
+
+      <div class="card" id="savedCard">
+        <h2>Saved Info</h2>
+        <p id="savedName">Name: -</p>
+        <p id="savedUser">Username: -</p>
+        <p id="savedEmail">Email: -</p>
+        <p id="savedPass">Password: -</p>
+      </div>
+
+      <a class="link" href="q4lgSectionLN.html">Back to Movie Form</a>
+    </main>
+
+    <script>
+      const form = document.getElementById("loginForm");
+      const clearBtn = document.getElementById("clearBtn");
+      const savedName = document.getElementById("savedName");
+      const savedUser = document.getElementById("savedUser");
+      const savedEmail = document.getElementById("savedEmail");
+      const savedPass = document.getElementById("savedPass");
+
+      function loadLogin() {
+        const saved = localStorage.getItem("loginInfo");
+        if (!saved) {
+          return null;
+        }
+        try {
+          return JSON.parse(saved);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function renderLogin(info) {
+        if (!info) {
+          savedName.textContent = "Name: -";
+          savedUser.textContent = "Username: -";
+          savedEmail.textContent = "Email: -";
+          savedPass.textContent = "Password: -";
+          return;
+        }
+        savedName.textContent = `Name: ${info.fullName}`;
+        savedUser.textContent = `Username: ${info.username}`;
+        savedEmail.textContent = `Email: ${info.email}`;
+        savedPass.textContent = `Password: ${info.password}`;
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const info = {
+          fullName: document.getElementById("fullName").value.trim(),
+          username: document.getElementById("username").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          password: document.getElementById("password").value.trim(),
+        };
+        if (!info.fullName || !info.username || !info.email || !info.password) {
+          alert("Please fill out all fields.");
+          return;
+        }
+        localStorage.setItem("loginInfo", JSON.stringify(info));
+        renderLogin(info);
+        form.reset();
+      });
+
+      clearBtn.addEventListener("click", () => {
+        localStorage.removeItem("loginInfo");
+        renderLogin(null);
+      });
+
+      renderLogin(loadLogin());
+    </script>
+  </body>
+</html>

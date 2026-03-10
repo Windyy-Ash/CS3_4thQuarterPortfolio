@@ -78,6 +78,10 @@
         font-size: 2rem;
       }
 
+      h2 {
+        margin: 32px 0 16px;
+      }
+
       form {
         display: grid;
         gap: 16px;
@@ -163,23 +167,28 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
+        flex-wrap: wrap;
       }
 
       .movie-info {
         font-weight: 600;
+        flex: 1 1 260px;
+        min-width: 0;
       }
 
       .movie-rating {
         color: var(--accent);
         font-weight: 700;
         letter-spacing: 2px;
+        white-space: nowrap;
       }
 
       .hint {
         text-align: center;
         color: var(--muted);
         font-size: 0.95rem;
-        margin-top: -8px;
+        margin-top: -4px;
+        margin-bottom: 8px;
       }
 
       @media (max-width: 600px) {
