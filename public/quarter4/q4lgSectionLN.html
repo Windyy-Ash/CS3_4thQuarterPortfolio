@@ -15,6 +15,8 @@
         --brand-dark: #0b5ed7;
         --accent: #f7b500;
         --shadow: 0 18px 40px rgba(16, 24, 40, 0.12);
+        --sparkle-1: rgba(255, 255, 255, 0.8);
+        --sparkle-2: rgba(255, 200, 90, 0.75);
       }
 
       * {
@@ -32,6 +34,36 @@
         display: grid;
         place-items: center;
         padding: 40px 16px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.35;
+        animation: sparkle-drift 18s linear infinite;
+      }
+
+      body::before {
+        background: radial-gradient(2px 2px at 10% 20%, var(--sparkle-1), transparent 60%),
+          radial-gradient(2px 2px at 30% 80%, var(--sparkle-2), transparent 60%),
+          radial-gradient(1.5px 1.5px at 70% 35%, var(--sparkle-1), transparent 60%),
+          radial-gradient(1.5px 1.5px at 85% 65%, var(--sparkle-2), transparent 60%),
+          radial-gradient(2px 2px at 55% 55%, var(--sparkle-1), transparent 60%);
+      }
+
+      body::after {
+        opacity: 0.25;
+        animation-duration: 26s;
+        background: radial-gradient(1.5px 1.5px at 15% 55%, var(--sparkle-2), transparent 60%),
+          radial-gradient(2px 2px at 45% 25%, var(--sparkle-1), transparent 60%),
+          radial-gradient(1.5px 1.5px at 65% 75%, var(--sparkle-2), transparent 60%),
+          radial-gradient(1.5px 1.5px at 90% 30%, var(--sparkle-1), transparent 60%);
       }
 
       .panel {
@@ -42,6 +74,13 @@
         padding: 32px;
         position: relative;
         overflow: hidden;
+        z-index: 1;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .panel:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 24px 48px rgba(16, 24, 40, 0.18);
       }
 
       .panel::before,
@@ -115,6 +154,19 @@
         align-items: center;
         gap: 6px;
         font-size: 1.6rem;
+      }
+
+      .rating-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .rating-hint {
+        color: var(--muted);
+        font-size: 0.9rem;
+        font-weight: 500;
       }
 
       .star {
@@ -200,7 +252,7 @@
       }
 
       .hint.tight {
-        margin-top: -4px;
+        margin-top: 17px;
         margin-bottom: 12px;
       }
 
@@ -228,6 +280,18 @@
           align-items: flex-start;
         }
       }
+
+      @keyframes sparkle-drift {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
     </style>
   </head>
   <body>
@@ -253,7 +317,10 @@
           </select>
         </div>
         <div>
-          <label>Rating:</label>
+          <div class="rating-row">
+            <label>Rating:</label>
+            <span class="rating-hint">Click the stars to set a rating.</span>
+          </div>
           <div class="rating" id="rating" aria-label="Movie rating">
             <span class="star" data-value="1">&#9733;</span>
             <span class="star" data-value="2">&#9733;</span>
@@ -264,7 +331,6 @@
         </div>
         <button type="submit">Add Movie</button>
       </form>
-      <p class="hint tight">Click the stars to set a rating.</p>
 
       <h2>Movie List</h2>
       <div class="movie-list" id="movieList"></div>

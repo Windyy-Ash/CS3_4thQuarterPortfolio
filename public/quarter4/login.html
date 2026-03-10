@@ -15,6 +15,8 @@
         --brand-dark: #1d4ed8;
         --accent: #f59e0b;
         --shadow: 0 18px 40px rgba(16, 24, 40, 0.12);
+        --sparkle-1: rgba(255, 255, 255, 0.8);
+        --sparkle-2: rgba(96, 165, 250, 0.65);
       }
 
       * {
@@ -32,6 +34,36 @@
         display: grid;
         place-items: center;
         padding: 40px 16px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.3;
+        animation: sparkle-drift 20s linear infinite;
+      }
+
+      body::before {
+        background: radial-gradient(2px 2px at 12% 25%, var(--sparkle-1), transparent 60%),
+          radial-gradient(2px 2px at 38% 78%, var(--sparkle-2), transparent 60%),
+          radial-gradient(1.5px 1.5px at 72% 35%, var(--sparkle-1), transparent 60%),
+          radial-gradient(1.5px 1.5px at 85% 68%, var(--sparkle-2), transparent 60%),
+          radial-gradient(2px 2px at 55% 55%, var(--sparkle-1), transparent 60%);
+      }
+
+      body::after {
+        opacity: 0.22;
+        animation-duration: 28s;
+        background: radial-gradient(1.5px 1.5px at 18% 60%, var(--sparkle-2), transparent 60%),
+          radial-gradient(2px 2px at 45% 22%, var(--sparkle-1), transparent 60%),
+          radial-gradient(1.5px 1.5px at 68% 75%, var(--sparkle-2), transparent 60%),
+          radial-gradient(1.5px 1.5px at 92% 35%, var(--sparkle-1), transparent 60%);
       }
 
       .panel {
@@ -42,6 +74,13 @@
         padding: 32px;
         position: relative;
         overflow: hidden;
+        z-index: 1;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .panel:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 24px 48px rgba(16, 24, 40, 0.18);
       }
 
       .panel::before,
@@ -178,6 +217,18 @@
       @media (max-width: 600px) {
         .panel {
           padding: 24px 18px;
+        }
+      }
+
+      @keyframes sparkle-drift {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+        100% {
+          transform: translateY(0);
         }
       }
     </style>
