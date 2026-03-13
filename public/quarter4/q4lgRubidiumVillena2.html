@@ -224,9 +224,26 @@
         transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
       }
 
+      .edit-btn {
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+        color: #1d4ed8;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      }
+
       .delete-btn:hover {
         background: #fee2e2;
         border-color: #fca5a5;
+        transform: translateY(-1px);
+      }
+
+      .edit-btn:hover {
+        background: #dbeafe;
+        border-color: #93c5fd;
         transform: translateY(-1px);
       }
 
@@ -274,6 +291,11 @@
         font-weight: 700;
         letter-spacing: 2px;
         white-space: nowrap;
+      }
+
+      .movie-actions {
+        display: flex;
+        gap: 8px;
       }
 
       .hint {
@@ -426,8 +448,10 @@
       const ratingEl = document.getElementById("rating");
       const stars = Array.from(document.querySelectorAll(".star"));
       const movieList = document.getElementById("movieList");
+      const submitBtn = form.querySelector("button[type='submit']");
 
       let currentRating = "0";
+      let editingIndex = null;
 
       function normalizeTitle(value) {
         return value.trim().toLowerCase();
@@ -480,6 +504,23 @@
           const starCount = Math.max(0, Math.round(numericRating));
           rating.textContent = `${"\u2605".repeat(starCount)} (${numericRating.toFixed(1)})`;
 
+          const actions = document.createElement("div");
+          actions.className = "movie-actions";
+
+          const editBtn = document.createElement("button");
+          editBtn.type = "button";
+          editBtn.className = "edit-btn";
+          editBtn.textContent = "Edit";
+          editBtn.addEventListener("click", () => {
+            document.getElementById("title").value = movie.title;
+            document.getElementById("year").value = movie.year;
+            document.getElementById("genre").value = movie.genre;
+            document.getElementById("review").value = movie.review || "";
+            setRating(String(movie.rating || "0"));
+            editingIndex = index;
+            submitBtn.textContent = "Update Movie";
+          });
+
           const deleteBtn = document.createElement("button");
           deleteBtn.type = "button";
           deleteBtn.className = "delete-btn";
@@ -496,7 +537,9 @@
 
           item.appendChild(info);
           item.appendChild(rating);
-          item.appendChild(deleteBtn);
+          actions.appendChild(editBtn);
+          actions.appendChild(deleteBtn);
+          item.appendChild(actions);
           movieList.appendChild(item);
         });
       }
@@ -521,30 +564,42 @@
         }
 
         const movies = loadMovies();
-        const existingIndex = movies.findIndex(
-          (movie) => normalizeTitle(movie.title) === normalizeTitle(title)
-        );
-
-        if (existingIndex >= 0) {
-          const existing = movies[existingIndex];
-          const averagedRating =
-            (Number(existing.rating) + Number(currentRating)) / 2;
-          movies[existingIndex] = {
-            ...existing,
-            title,
-            year,
-            genre,
-            review,
-            rating: Number(averagedRating.toFixed(1)),
-          };
-        } else {
-          movies.push({
+        if (editingIndex !== null) {
+          movies[editingIndex] = {
             title,
             year,
             genre,
             review,
             rating: Number(currentRating),
-          });
+          };
+          editingIndex = null;
+          submitBtn.textContent = "Add Movie";
+        } else {
+          const existingIndex = movies.findIndex(
+            (movie) => normalizeTitle(movie.title) === normalizeTitle(title)
+          );
+
+          if (existingIndex >= 0) {
+            const existing = movies[existingIndex];
+            const averagedRating =
+              (Number(existing.rating) + Number(currentRating)) / 2;
+            movies[existingIndex] = {
+              ...existing,
+              title,
+              year,
+              genre,
+              review,
+              rating: Number(averagedRating.toFixed(1)),
+            };
+          } else {
+            movies.push({
+              title,
+              year,
+              genre,
+              review,
+              rating: Number(currentRating),
+            });
+          }
         }
 
         saveMovies(movies);
