@@ -213,6 +213,23 @@
         transform: translateY(1px) scale(0.99);
       }
 
+      .delete-btn {
+        border: 1px solid #d1d5db;
+        background: #ffffff;
+        color: #111827;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      }
+
+      .delete-btn:hover {
+        background: #fee2e2;
+        border-color: #fca5a5;
+        transform: translateY(-1px);
+      }
+
       .movie-list {
         margin-top: 24px;
         margin-bottom: 8px;
@@ -412,6 +429,10 @@
 
       let currentRating = "0";
 
+      function normalizeTitle(value) {
+        return value.trim().toLowerCase();
+      }
+
       function setRating(value) {
         currentRating = value;
         stars.forEach((star) => {
@@ -438,7 +459,7 @@
 
       function renderMovies(movies) {
         movieList.innerHTML = "";
-        movies.forEach((movie) => {
+        movies.forEach((movie, index) => {
           const item = document.createElement("div");
           item.className = "movie-card";
 
@@ -455,10 +476,27 @@
 
           const rating = document.createElement("div");
           rating.className = "movie-rating";
-          rating.textContent = "\u2605".repeat(Number(movie.rating));
+          const numericRating = Number(movie.rating) || 0;
+          const starCount = Math.max(0, Math.round(numericRating));
+          rating.textContent = `${"\u2605".repeat(starCount)} (${numericRating.toFixed(1)})`;
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.type = "button";
+          deleteBtn.className = "delete-btn";
+          deleteBtn.textContent = "Delete";
+          deleteBtn.addEventListener("click", () => {
+            const shouldDelete = window.confirm(`Delete "${movie.title}" from the list?`);
+            if (!shouldDelete) {
+              return;
+            }
+            const updated = loadMovies().filter((_, i) => i !== index);
+            saveMovies(updated);
+            renderMovies(updated);
+          });
 
           item.appendChild(info);
           item.appendChild(rating);
+          item.appendChild(deleteBtn);
           movieList.appendChild(item);
         });
       }
@@ -483,13 +521,32 @@
         }
 
         const movies = loadMovies();
-        movies.push({
-          title,
-          year,
-          genre,
-          review,
-          rating: currentRating,
-        });
+        const existingIndex = movies.findIndex(
+          (movie) => normalizeTitle(movie.title) === normalizeTitle(title)
+        );
+
+        if (existingIndex >= 0) {
+          const existing = movies[existingIndex];
+          const averagedRating =
+            (Number(existing.rating) + Number(currentRating)) / 2;
+          movies[existingIndex] = {
+            ...existing,
+            title,
+            year,
+            genre,
+            review,
+            rating: Number(averagedRating.toFixed(1)),
+          };
+        } else {
+          movies.push({
+            title,
+            year,
+            genre,
+            review,
+            rating: Number(currentRating),
+          });
+        }
+
         saveMovies(movies);
         renderMovies(movies);
         form.reset();
