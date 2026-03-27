@@ -57,18 +57,24 @@
 
 - Guided Question: What changed compared to the default static positioning? Try to give different values to top and left or you can change it to bottom, right.
 
+
+> Answer: What changed with the sidebar box was that the sidebar boxed move a little bit to the bottom and a bit to the right. It means that it was moving 20px away from the top and 10px away from the left. 
+
 ### Step 2 (Fixed):
 
 - Add in css ```position: fixed; bottom: 0; width: 100%;``` to .footer.
 
 - Guided Question: What happens when you scroll the page? Why does the footer behave differently from position relative?
 
+
+> Answer: The footer now will be fixed at the very bottom and it will not move when scrolling because fixed postion makes it stay in the same place even when the page is scrolled. A footer with position fixed is pinned to the viewport and removed from the normal document flow which mean it is anchored to the viewport which makes it visible even when the page is scorlled, while position relative keeps it in the flow and moves it relative to its original position.
 ### Step 3 (Absolute):
 
 - Add in css ```position: absolute; top: 66px; left: 200px;``` to .content.
 
 - Guided Question: What is the effect of position: absolute on an element? How is it different from fixed?
 
+> Well absolute postiion removes an element form nor document flow and positions it releative to its closest positioned ancestor, unlike position fixed, it positions an element relative to the viewport and keeps it in place during scrolling.
 ### Step 4 : (Absolute)
 
 - Add in html ```<div class="notice">Notice!</div>``` and include the css below:
