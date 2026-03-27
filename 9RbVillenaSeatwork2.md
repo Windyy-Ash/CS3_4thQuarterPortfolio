@@ -94,14 +94,24 @@
 
 - Guided Question: Why does the notice appear on top of the content? What happens if you swap the z‑index values?
 
+> Well since .notice has a higher z-index(2) than .content(1), the browser renders .notice above .content in the stacking context. If you swap the index values like .notice will have a z-index of 1 and .content will have a z-index of 2, .content will now have the higher z-index, so it will be drawn above .notice. This means the notice could be hidden behind the content if they overlap.
+
 - Challenge: 
     * What changes that you have to do on the code that will position .notice box on the top right corner of the .content box? Please write the code on paper as well (both html and css on the part of .notice and .content).
+
+    > To place the .notice box at the top-right corner inside the .content box, you need to make .content the positioning reference by adding position: relative; to it, then set .notice to position: absolute; top: 0; right: 0; so it pins to the top-right of .content (not the whole page). You have to put the <div class="notice">Notice!</div> inside the .content div so it becomes a child of the content area.
+
     * Try to change the position of .content to relative then to fixed. What do you observed each time?
     * What do you observe on about the effect of z-index on .notice and .content boxes?
 
 3. Please answer the following reflection questions (15 minutes)
 
     a. Could you summarize the differences between the CSS position values (static, relative, absolute, fixed)? 
+
+    > Static is the default positioning for all HTML elements, elements follow the normal document flow, appearing one after another, the Top, right, bottom, and left properties have no effect.
+    > In relative, the element remains in the normal flow, but can be offset relative to its original position using top, right, bottom, or left. The space it originally occupies is preserved, so other elements are not affected.
+    > In Absolute, the element is removed from the normal document flow; it does not occupy space in the layout and it is positioned relative to its nearest positioned ancestor (an ancestor with position other than static). If none exists, it defaults to the initial containing block (usually the document body). It is also commonly used for overlays, popups, or floating elements inside a container.
+    > Fixed is where the element is removed from the normal flow and anchored to the viewport, staying in the same position even when the page is scrolled. It is positioned using top, right, bottom, or left relative to the viewport. It is ideal for sticky headers, floating buttons, or persistent navigation elements ().
 
     b. How does absolute positioning depend on its parent element?
 
