@@ -102,7 +102,11 @@
     > To place the .notice box at the top-right corner inside the .content box, you need to make .content the positioning reference by adding position: relative; to it, then set .notice to position: absolute; top: 0; right: 0; so it pins to the top-right of .content (not the whole page). You have to put the <div class="notice">Notice!</div> inside the .content div so it becomes a child of the content area.
 
     * Try to change the position of .content to relative then to fixed. What do you observed each time?
+
+    > With position relative, the .content still has the space it used to take is still reserved, so other elements don’t move into it. But with fixed position, the .content it stays in the same screen spot when you scroll and can overlap other elements since its original space is no longer reserved.
+
     * What do you observe on about the effect of z-index on .notice and .content boxes?
+    > Z-index controls which box appears on top when they overlap. Since .notice has a higher z-index than .content, .notices shows above it. If you lower .notice or raise .content, the content will cover the .notice.
 
 3. Please answer the following reflection questions (15 minutes)
 
@@ -115,6 +119,12 @@
 
     b. How does absolute positioning depend on its parent element?
 
+    > In CSS, an absolutely positioned element determines its location based on its nearest positioned ancestor. A "positioned" ancestor is any parent element that has a position value other than the default static such as relative, absolute, fixed, or sticky
+
     c. How do you differentiate sticky from fixed (you can research on sticky)?
 
+    >The difference between sticky and fixed position is that, in fixed position, it anchors an element to the screen (viewport) regardless of scrolling, while sticky acts like a normal element until it scrolls into a specific position, at which point it becomes fixed, but only within its parent container
+
     d. If you were designing a webpage for a school event, how might you use positioning to highlight important information? Please give concrete examples.
+
+    > If I were to make a school website I would use like the position fixed for the footer to highlight the important references and to say when was the web created and to put who created it too (footer info). I would use the sticky positioning also use sticy positions quests are usually pinned to the side of the screen. You can replicate this for a "Guides" or "Archon Quests" page. Like on a side panel it will show lists about the sub-steps of a long quest.
