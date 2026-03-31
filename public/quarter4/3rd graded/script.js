@@ -4,8 +4,8 @@ function plotPoint() {
     var point = document.createElement('div');  
     point.className = 'point';
     /* control where to place the div on the screen using left and bottom of position:absolute */
-    point.styleleft = (x - x0 + 200 - 5) + 'px'; // subtract half the width of the point to center it by changing left css property
-    point.stylebottom = (y - y0 + 200 - 5) + 'px'; // subtract half the height of the point to center it by changing bottom css property
+    point.style.left = (x - x0 + 200 - 5) + 'px'; // subtract half the width of the point to center it by changing left css property
+    point.style.bottom = (y - y0 + 200 - 5) + 'px'; // subtract half the height of the point to center it by changing bottom css property
     document.getElementById('coordinatePlane').appendChild(point);
 
     if (x > x0 && y > y0){
